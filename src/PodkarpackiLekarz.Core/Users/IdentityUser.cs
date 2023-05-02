@@ -1,7 +1,7 @@
 ﻿using PodkarpackiLekarz.Shared.Identity;
 
 namespace PodkarpackiLekarz.Core.Users;
-public abstract class UserBase
+public class IdentityUser
 {
     public Guid Id { get; private set; }
     public string FirstName { get; private set; }
@@ -10,7 +10,7 @@ public abstract class UserBase
     public string Password { get; private set; }
     public Role Role { get; private set; }
 
-    public UserBase(
+    public IdentityUser(
         Guid id,
         string firstName,
         string lastName,
@@ -24,7 +24,7 @@ public abstract class UserBase
         Role = role;
     }
 
-    public UserBase()
+    public IdentityUser()
     {
 
     }

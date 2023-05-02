@@ -2,7 +2,7 @@
 using PodkarpackiLekarz.Shared.Identity;
 
 namespace PodkarpackiLekarz.Core.Users.Doctors;
-public class Doctor : UserBase
+public class Doctor : IdentityUser
 {
     public DoctorProfile DoctorProfile { get; private set; }
     public bool CredibilityConfirmed { get; private set; }
