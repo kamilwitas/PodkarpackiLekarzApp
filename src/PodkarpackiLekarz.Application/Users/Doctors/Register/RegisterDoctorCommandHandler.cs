@@ -32,7 +32,7 @@ public class RegisterDoctorCommandHandler : IRequestHandler<RegisterDoctorComman
         var doctorType = await _doctorTypeRepository.GetAsync(request.DoctorTypeId);
 
         if (doctorType is null)
-            throw new DoctorTypeNotFoundException(request.DoctorTypeId.ToString());
+            throw new DoctorTypeNotFoundException(request.DoctorTypeId);
 
         var doctor = UsersFactory.CreateDoctor(
             request.FirstName,

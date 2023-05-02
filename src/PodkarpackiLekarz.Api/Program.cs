@@ -19,7 +19,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.ApplyDbMigrations();
+app.UseInfrastructure();
 
 app.UseHttpsRedirection();
 

@@ -3,7 +3,8 @@
 namespace PodkarpackiLekarz.Application.Exceptions.Users;
 public class DoctorTypeNotFoundException : BadRequestException
 {
-    public DoctorTypeNotFoundException(string doctorTypeId) : base(doctorTypeId)
+    public DoctorTypeNotFoundException(Guid doctorTypeId) 
+        : base($"Doctor type with id: {doctorTypeId} not found")
     {
     }
 }

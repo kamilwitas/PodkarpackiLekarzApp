@@ -7,6 +7,7 @@ using PodkarpackiLekarz.Core.Users.Doctors;
 using PodkarpackiLekarz.Core.Users.Patients;
 using PodkarpackiLekarz.Infrastructure.Persistence;
 using PodkarpackiLekarz.Infrastructure.Persistence.Repositories.Users;
+using WashApp.Shared.Infrastructure.Exceptions;
 
 namespace PodkarpackiLekarz.Infrastructure;
 public static class Extensions
@@ -26,19 +27,28 @@ public static class Extensions
         services.AddScoped<IIdentityUsersRepository, IdentityUsersRepository>();
         services.AddScoped<IDoctorTypesRepository, DoctorTypesRepository>();
 
+        services.AddTransient<GlobalExceptionHandlerMiddleware>();
+
 
         return services;
     }
 
-    public static IApplicationBuilder ApplyDbMigrations(
+    public static IApplicationBuilder UseInfrastructure(
         this IApplicationBuilder app)
+    {
+        MigrateDatabase(app);
+
+        app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+
+        return app;
+    }
+
+    private static void MigrateDatabase(IApplicationBuilder app)
     {
         using (var serviceScope = app.ApplicationServices.CreateScope())
         {
-            var dbContext= serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var dbContext = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
             dbContext.Database.Migrate();
         }
-
-        return app;
     }
 }
