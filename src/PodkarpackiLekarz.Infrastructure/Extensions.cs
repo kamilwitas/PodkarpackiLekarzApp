@@ -3,10 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PodkarpackiLekarz.Core.Users;
+using PodkarpackiLekarz.Core.Users.Admins;
 using PodkarpackiLekarz.Core.Users.Doctors;
 using PodkarpackiLekarz.Core.Users.Patients;
+using PodkarpackiLekarz.Infrastructure.Auth;
 using PodkarpackiLekarz.Infrastructure.Persistence;
 using PodkarpackiLekarz.Infrastructure.Persistence.Repositories.Users;
+using PodkarpackiLekarz.Shared.Identity;
 using WashApp.Shared.Infrastructure.Exceptions;
 
 namespace PodkarpackiLekarz.Infrastructure;
@@ -26,8 +29,14 @@ public static class Extensions
         services.AddScoped<IDoctorsRepository, DoctorsRepository>();
         services.AddScoped<IIdentityUsersRepository, IdentityUsersRepository>();
         services.AddScoped<IDoctorTypesRepository, DoctorTypesRepository>();
+        services.AddScoped<IAdministratorsRepository, AdministratorsRepository>();
 
         services.AddTransient<GlobalExceptionHandlerMiddleware>();
+
+        services.EnableAuthorizationWithPermissionPolicies();
+
+        services.EnableAuthorizationWithPermissionPolicies();
+        services.EnableJwtAuthentication(configuration);
 
 
         return services;
@@ -50,5 +59,5 @@ public static class Extensions
             var dbContext = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
             dbContext.Database.Migrate();
         }
-    }
+    }    
 }

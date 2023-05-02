@@ -4,7 +4,7 @@ using PodkarpackiLekarz.Api.Requests;
 namespace PodkarpackiLekarz.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class IdentityController : ControllerBase
     {
         [HttpPost]

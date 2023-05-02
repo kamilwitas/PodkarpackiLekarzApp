@@ -1,3 +1,4 @@
+using PodkarpackiLekarz.Api.Swagger;
 using PodkarpackiLekarz.Application;
 using PodkarpackiLekarz.Infrastructure;
 
@@ -5,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(opt => opt.SupportNonNullableReferenceTypes());
+builder.Services.AddSwagger();
 builder.Services.AddRouting(x => x.LowercaseUrls = true);
 
 builder.Services.AddApplication();
@@ -23,6 +24,7 @@ app.UseInfrastructure();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

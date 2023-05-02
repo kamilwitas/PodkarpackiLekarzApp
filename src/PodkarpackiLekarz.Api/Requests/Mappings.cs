@@ -1,4 +1,5 @@
 ﻿using PodkarpackiLekarz.Api.Requests.Users;
+using PodkarpackiLekarz.Application.Users.Administrators;
 using PodkarpackiLekarz.Application.Users.Doctors.Register;
 using PodkarpackiLekarz.Application.Users.Patients.Register;
 
@@ -27,4 +28,13 @@ public static class Mappings
             request.PasswordConfirmation,
             request.DoctorTypeId,
             request.Description);
+
+    public static AddAdministratorCommand ToCommand(
+        this AddAdministratorRequest request)
+        => new AddAdministratorCommand(
+            request.FirstName,
+            request.LastName,
+            request.Email,
+            request.Password,
+            request.PasswordConfirmation);
 }

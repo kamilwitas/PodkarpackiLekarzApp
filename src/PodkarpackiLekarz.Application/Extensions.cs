@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using PodkarpackiLekarz.Core.Users.Admins;
 using PodkarpackiLekarz.Core.Users.Doctors;
 using PodkarpackiLekarz.Core.Users.Patients;
-using System.Reflection;
 
 namespace PodkarpackiLekarz.Application;
 public static class Extensions
@@ -17,6 +17,7 @@ public static class Extensions
 
         services.AddTransient<IPasswordHasher<Patient>, PasswordHasher<Patient>>();
         services.AddTransient<IPasswordHasher<Doctor>, PasswordHasher<Doctor>>();
+        services.AddTransient<IPasswordHasher<Administrator>, PasswordHasher<Administrator>>();
 
         return services;
     }

@@ -6,7 +6,7 @@ using PodkarpackiLekarz.Api.Requests.Users;
 namespace PodkarpackiLekarz.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
 public class DoctorsController : ControllerBase
 {
     private readonly IMediator _mediator;

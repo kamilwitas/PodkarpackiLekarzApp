@@ -2,12 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using PodkarpackiLekarz.Api.Requests;
 using PodkarpackiLekarz.Api.Requests.Users;
-using PodkarpackiLekarz.Shared.Exceptions;
 
 namespace PodkarpackiLekarz.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
 public class PatientsController : ControllerBase
 {
     private readonly IMediator _mediator;

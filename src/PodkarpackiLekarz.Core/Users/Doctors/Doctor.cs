@@ -52,11 +52,11 @@ public class Doctor : IdentityUser
 
         return new Doctor(
             Guid.NewGuid(),
-            firstName,
-            lastName,
-            email,
-            doctorProfile,
-            false);
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            doctorProfile: doctorProfile,
+            confirmed: false);
     }
     
     public void ConfirmDoctorCredibility()
