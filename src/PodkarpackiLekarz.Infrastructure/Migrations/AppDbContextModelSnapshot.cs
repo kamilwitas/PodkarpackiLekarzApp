@@ -44,7 +44,7 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -63,9 +63,18 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email");
+
                     b.ToTable("IdentityUsers", "PLA");
 
                     b.UseTptMappingStrategy();
+                });
+
+            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Admins.Administrator", b =>
+                {
+                    b.HasBaseType("PodkarpackiLekarz.Core.Users.IdentityUser");
+
+                    b.ToTable("Administrators", "PLA");
                 });
 
             modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Doctors.Doctor", b =>
@@ -76,6 +85,31 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.ToTable("Doctors", "PLA");
+                });
+
+            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Patients.Patient", b =>
+                {
+                    b.HasBaseType("PodkarpackiLekarz.Core.Users.IdentityUser");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Pesel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("Pesel");
+
+                    b.ToTable("Patients", "PLA");
+                });
+
+            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Admins.Administrator", b =>
+                {
+                    b.HasOne("PodkarpackiLekarz.Core.Users.IdentityUser", null)
+                        .WithOne()
+                        .HasForeignKey("PodkarpackiLekarz.Core.Users.Admins.Administrator", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Doctors.Doctor", b =>
@@ -117,6 +151,15 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                         });
 
                     b.Navigation("DoctorProfile")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Patients.Patient", b =>
+                {
+                    b.HasOne("PodkarpackiLekarz.Core.Users.IdentityUser", null)
+                        .WithOne()
+                        .HasForeignKey("PodkarpackiLekarz.Core.Users.Patients.Patient", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

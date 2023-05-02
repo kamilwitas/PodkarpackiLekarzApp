@@ -1,8 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PodkarpackiLekarz.Core.Users;
+using PodkarpackiLekarz.Core.Users.Doctors;
+using PodkarpackiLekarz.Core.Users.Patients;
 using PodkarpackiLekarz.Infrastructure.Persistence;
-using System.ComponentModel.DataAnnotations;
+using PodkarpackiLekarz.Infrastructure.Persistence.Repositories.Users;
 
 namespace PodkarpackiLekarz.Infrastructure;
 public static class Extensions
@@ -17,6 +21,24 @@ public static class Extensions
             opt.UseSqlServer(connectionString);
         });
 
+        services.AddScoped<IPatientsRepository, PatientsRepository>();
+        services.AddScoped<IDoctorsRepository, DoctorsRepository>();
+        services.AddScoped<IIdentityUsersRepository, IdentityUsersRepository>();
+        services.AddScoped<IDoctorTypesRepository, DoctorTypesRepository>();
+
+
         return services;
+    }
+
+    public static IApplicationBuilder ApplyDbMigrations(
+        this IApplicationBuilder app)
+    {
+        using (var serviceScope = app.ApplicationServices.CreateScope())
+        {
+            var dbContext= serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+            dbContext.Database.Migrate();
+        }
+
+        return app;
     }
 }

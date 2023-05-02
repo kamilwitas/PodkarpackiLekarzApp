@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PodkarpackiLekarz.Core.Users.Doctors;
 
 namespace PodkarpackiLekarz.Infrastructure.Persistence.EntityConfigurations.Users;
-public class DoctorEntityConfiguration : IEntityTypeConfiguration<Doctor>
+internal class DoctorEntityConfiguration : IEntityTypeConfiguration<Doctor>
 {
     public void Configure(EntityTypeBuilder<Doctor> builder)
     {
@@ -12,6 +12,7 @@ public class DoctorEntityConfiguration : IEntityTypeConfiguration<Doctor>
             .ToTable("DoctorProfiles")
             .WithOwner()
             .HasForeignKey("identityUserId");
+        builder.HasIndex(x => x.Email);
             
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PodkarpackiLekarz.Core.Users.Doctors;
 
 namespace PodkarpackiLekarz.Infrastructure.Persistence.EntityConfigurations.Users;
-public class DoctorTypeEntityConfiguration : IEntityTypeConfiguration<DoctorType>
+internal class DoctorTypeEntityConfiguration : IEntityTypeConfiguration<DoctorType>
 {
     public void Configure(EntityTypeBuilder<DoctorType> builder)
     {

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PodkarpackiLekarz.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class initialmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,13 +35,32 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_IdentityUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Administrators",
+                schema: "PLA",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Administrators", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Administrators_IdentityUsers_Id",
+                        column: x => x.Id,
+                        principalSchema: "PLA",
+                        principalTable: "IdentityUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,6 +76,27 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                     table.PrimaryKey("PK_Doctors", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Doctors_IdentityUsers_Id",
+                        column: x => x.Id,
+                        principalSchema: "PLA",
+                        principalTable: "IdentityUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Patients",
+                schema: "PLA",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Pesel = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Patients_IdentityUsers_Id",
                         column: x => x.Id,
                         principalSchema: "PLA",
                         principalTable: "IdentityUsers",
@@ -97,13 +137,33 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                 schema: "PLA",
                 table: "DoctorProfiles",
                 column: "DoctorTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IdentityUsers_Email",
+                schema: "PLA",
+                table: "IdentityUsers",
+                column: "Email");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patients_Pesel",
+                schema: "PLA",
+                table: "Patients",
+                column: "Pesel");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Administrators",
+                schema: "PLA");
+
+            migrationBuilder.DropTable(
                 name: "DoctorProfiles",
+                schema: "PLA");
+
+            migrationBuilder.DropTable(
+                name: "Patients",
                 schema: "PLA");
 
             migrationBuilder.DropTable(

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PodkarpackiLekarz.Core.Users;
 
 namespace PodkarpackiLekarz.Infrastructure.Persistence.EntityConfigurations.Users;
-public class IdentityUserEntityConfiguration : IEntityTypeConfiguration<IdentityUser>
+internal class IdentityUserEntityConfiguration : IEntityTypeConfiguration<IdentityUser>
 {
     public void Configure(EntityTypeBuilder<IdentityUser> builder)
     {
@@ -12,6 +12,8 @@ public class IdentityUserEntityConfiguration : IEntityTypeConfiguration<Identity
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id)
             .ValueGeneratedNever();
+
+        builder.HasIndex(x => x.Email);
     }
     
 }

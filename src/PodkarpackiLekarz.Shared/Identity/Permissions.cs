@@ -5,6 +5,7 @@ public static class Permissions
     public static string[] AllPermissions => GetAllPermissions();
 
     public const string ManageUsers = "manage-users";
+    public const string ConfirmDoctorCredibility = "confirm-doctor-credibility";
 
     public static string[] GetPermissions(Role role)
     {
@@ -17,7 +18,7 @@ public static class Permissions
         };
     }    
 
-    private static string[] AdminPermissions = new string[] { ManageUsers };
+    private static string[] AdminPermissions = new string[] { ManageUsers, ConfirmDoctorCredibility };
     private static string[] PatientPermissions = new string[] { };
     private static string[] DoctorPermissions = new string[] { };
 
