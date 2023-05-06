@@ -7,10 +7,10 @@ using PodkarpackiLekarz.Core.Users.Admins;
 using PodkarpackiLekarz.Core.Users.Doctors;
 using PodkarpackiLekarz.Core.Users.Patients;
 using PodkarpackiLekarz.Infrastructure.Auth;
+using PodkarpackiLekarz.Infrastructure.Exceptions;
 using PodkarpackiLekarz.Infrastructure.Persistence;
 using PodkarpackiLekarz.Infrastructure.Persistence.Repositories.Users;
 using PodkarpackiLekarz.Shared.Identity;
-using WashApp.Shared.Infrastructure.Exceptions;
 
 namespace PodkarpackiLekarz.Infrastructure;
 public static class Extensions

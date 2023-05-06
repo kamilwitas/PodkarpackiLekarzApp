@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using PodkarpackiLekarz.Shared.Exceptions;
 
-namespace WashApp.Shared.Infrastructure.Exceptions;
+namespace PodkarpackiLekarz.Infrastructure.Exceptions;
 
 public class GlobalExceptionHandlerMiddleware : IMiddleware
 {
@@ -26,6 +26,16 @@ public class GlobalExceptionHandlerMiddleware : IMiddleware
             var jsonResponse = HandleException(context, ex, 400);
             await context.Response.WriteAsync(jsonResponse);
         }
+        catch (AuthorizationException ex)
+        {
+            var jsonResponse = HandleException(context, ex, 400);
+            await context.Response.WriteAsync(jsonResponse);
+        }
+        catch (ValidationErrorException ex)
+        {
+            var jsonResponse = HandleValidationErrorException(context, ex, 400);
+            await context.Response.WriteAsync(jsonResponse);
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, ex.Message);
@@ -43,6 +53,20 @@ public class GlobalExceptionHandlerMiddleware : IMiddleware
 
         var errorCode = ToUnderscoreCase(ex.GetType().Name.Replace("Exception", string.Empty));
         var json = JsonConvert.SerializeObject(new { ErrorCode = errorCode, ErrorMessage = ex.Message });
+
+        return json;
+    }
+
+    private string HandleValidationErrorException(HttpContext context, ValidationErrorException ex, int httpStatusCode)
+    {
+        _logger.LogError(ex, ex.Message);
+
+        context.Response.StatusCode = httpStatusCode;
+        context.Response.Headers.Add("content-type", "application/json");
+
+        var errorCode = ToUnderscoreCase(ex.GetType().Name.Replace("Exception", string.Empty));
+
+        var json = JsonConvert.SerializeObject(new { ErrorCode = errorCode, Errors = ex.ValidationErrors });
 
         return json;
     }

@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using FluentValidation;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using PodkarpackiLekarz.Application.Behaviours;
 using PodkarpackiLekarz.Application.Users.Common.Initializer;
-using PodkarpackiLekarz.Core.Users;
 using PodkarpackiLekarz.Core.Users.Admins;
 using PodkarpackiLekarz.Core.Users.Doctors;
 using PodkarpackiLekarz.Core.Users.Patients;
+using System.Reflection;
+using IdentityUser = PodkarpackiLekarz.Core.Users.IdentityUser;
 
 namespace PodkarpackiLekarz.Application;
 public static class Extensions
@@ -13,9 +17,11 @@ public static class Extensions
     public static IServiceCollection AddApplication(
         this IServiceCollection services)
     {
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddMediatR(x =>
-        {
-            x.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+        {      
+            x.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+            x.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());            
         });
 
         services.AddTransient<IPasswordHasher<Patient>, PasswordHasher<Patient>>();
