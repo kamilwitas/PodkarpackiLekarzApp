@@ -13,7 +13,8 @@ internal class IdentityUserEntityConfiguration : IEntityTypeConfiguration<Identi
         builder.Property(x => x.Id)
             .ValueGeneratedNever();
 
-        builder.HasIndex(x => x.Email);
+        builder.HasIndex(x => x.Email)
+            .IsUnique(true);
 
         builder.HasOne(x => x.Session)
             .WithOne(x => x.IdentityUser)

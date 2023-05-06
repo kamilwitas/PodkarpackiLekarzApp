@@ -11,6 +11,13 @@ internal class PatientEntityConfiguration : IEntityTypeConfiguration<Patient>
         builder.Property(x => x.Pesel)
             .IsRequired(true);
 
-        builder.HasIndex(x => x.Pesel);
+        builder.HasIndex(x => x.Pesel)
+            .IsUnique(true);
+
+        builder.Property(x => x.Id)
+            .ValueGeneratedNever();
+
+        builder.HasIndex(x => x.Email)
+            .IsUnique(true);
     }
 }

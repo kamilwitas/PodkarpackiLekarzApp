@@ -21,6 +21,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseInfrastructure();
+app.UseApplication();
 
 app.UseHttpsRedirection();
 

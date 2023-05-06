@@ -165,13 +165,16 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                 name: "IX_IdentityUsers_Email",
                 schema: "PLA",
                 table: "IdentityUsers",
-                column: "Email");
+                column: "Email",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Patients_Pesel",
                 schema: "PLA",
                 table: "Patients",
-                column: "Pesel");
+                column: "Pesel",
+                unique: true,
+                filter: "[Pesel] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserSessions_UserId",

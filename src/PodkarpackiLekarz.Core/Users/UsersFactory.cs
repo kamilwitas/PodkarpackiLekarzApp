@@ -27,6 +27,17 @@ public static class UsersFactory
             lastName,
             email);
 
+    public static Administrator CreateInitialAministrator(
+        Guid id,
+        string firstName,
+        string lastName,
+        string email)
+        => Administrator.CreateInitialAdmin(
+            id,
+            firstName,
+            lastName,
+            email);
+
     public static Patient CreatePatient(
         string firstName,
         string lastName,

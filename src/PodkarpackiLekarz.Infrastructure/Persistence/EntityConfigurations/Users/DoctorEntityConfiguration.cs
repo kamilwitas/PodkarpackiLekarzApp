@@ -12,7 +12,12 @@ internal class DoctorEntityConfiguration : IEntityTypeConfiguration<Doctor>
             .ToTable("DoctorProfiles")
             .WithOwner()
             .HasForeignKey("identityUserId");
-        builder.HasIndex(x => x.Email);
+
+        builder.HasIndex(x => x.Email)
+            .IsUnique(true);
+
+        builder.Property(x => x.Id)
+            .ValueGeneratedNever();
             
     }
 }

@@ -16,8 +16,16 @@ public class AdministratorsRepository : IAdministratorsRepository
         await _dbContext.Administrators.AddAsync(administrator);
     }
 
+    public void Add(Administrator administrator)
+    {
+        _dbContext.Add(administrator);
+    }
+
     public async Task<Administrator?> GetAsync(Guid id)
         => await _dbContext.Administrators.FirstOrDefaultAsync(x => x.Id == id);    
+
+    public Administrator? Get(Guid id)
+        => _dbContext.Administrators.FirstOrDefault(x => x.Id == id);   
 
     public async Task<Administrator?> GetAsync(string email)
         => await _dbContext.Administrators.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
@@ -25,5 +33,10 @@ public class AdministratorsRepository : IAdministratorsRepository
     public async Task SaveAsync()
     {
         await _dbContext.SaveChangesAsync();
+    }
+
+    public void Save()
+    {
+        _dbContext.SaveChanges();
     }
 }

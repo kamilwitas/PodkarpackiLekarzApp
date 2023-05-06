@@ -22,6 +22,33 @@ public class Administrator : IdentityUser
         string lastName,
         string email)
     {
+        ValidateInput(
+            firstName,
+            lastName,
+            email);
+
+        return new Administrator(Guid.NewGuid(),firstName, lastName, email);
+    }
+
+    internal static Administrator CreateInitialAdmin(
+        Guid id,
+        string firstName,
+        string lastName,
+        string email)
+    {
+        ValidateInput(
+            firstName,
+            lastName,
+            email);
+
+        return new Administrator(id, firstName, lastName, email);
+    }
+
+    private static void ValidateInput(
+        string firstName,
+        string lastName,
+        string email)
+    {
         if (string.IsNullOrEmpty(firstName))
             throw new FieldCannotBeNullOrEmptyException(nameof(firstName));
 
@@ -30,8 +57,6 @@ public class Administrator : IdentityUser
 
         if (string.IsNullOrEmpty(email))
             throw new FieldCannotBeNullOrEmptyException(nameof(email));
-
-        return new Administrator(Guid.NewGuid(),firstName, lastName, email);
     }
 
 }

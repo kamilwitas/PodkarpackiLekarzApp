@@ -1,5 +1,6 @@
 ﻿using PodkarpackiLekarz.Api.Requests.Users;
 using PodkarpackiLekarz.Application.Users.Administrators;
+using PodkarpackiLekarz.Application.Users.Common.SignIn;
 using PodkarpackiLekarz.Application.Users.Doctors.Register;
 using PodkarpackiLekarz.Application.Users.Patients.Register;
 
@@ -37,4 +38,10 @@ public static class Mappings
             request.Email,
             request.Password,
             request.PasswordConfirmation);
+
+    public static SignInCommand ToCommand(
+        this SignInRequest request)
+        => new SignInCommand(
+            request.Email,
+            request.Password);
 }

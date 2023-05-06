@@ -12,7 +12,7 @@ using PodkarpackiLekarz.Infrastructure.Persistence;
 namespace PodkarpackiLekarz.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230506082657_initial")]
+    [Migration("20230506092811_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -66,7 +66,8 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email");
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("IdentityUsers", "PLA");
 
@@ -127,7 +128,9 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("Pesel");
+                    b.HasIndex("Pesel")
+                        .IsUnique()
+                        .HasFilter("[Pesel] IS NOT NULL");
 
                     b.ToTable("Patients", "PLA");
                 });

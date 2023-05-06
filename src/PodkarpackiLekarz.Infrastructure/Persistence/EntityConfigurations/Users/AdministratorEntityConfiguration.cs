@@ -8,5 +8,11 @@ internal class AdministratorEntityConfiguration : IEntityTypeConfiguration<Admin
     public void Configure(EntityTypeBuilder<Administrator> builder)
     {
         builder.ToTable("Administrators");
+
+        builder.Property(x => x.Id)
+            .ValueGeneratedNever();
+
+        builder.HasIndex(x => x.Email)
+            .IsUnique(true);
     }
 }
