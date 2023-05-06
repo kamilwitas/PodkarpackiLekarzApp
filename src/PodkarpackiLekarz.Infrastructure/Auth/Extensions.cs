@@ -7,6 +7,7 @@ using PodkarpackiLekarz.Application.Auth;
 using PodkarpackiLekarz.Shared.Identity;
 using System.Runtime.CompilerServices;
 using System.Text;
+using IAuthorizationService = PodkarpackiLekarz.Application.Auth.IAuthorizationService;
 
 namespace PodkarpackiLekarz.Infrastructure.Auth;
 public static class Extensions
@@ -63,6 +64,8 @@ public static class Extensions
 
         services.Configure<AuthorizationSettings>(configuration.GetSection("jwt"));
         services.AddScoped<IJwtProvider, JwtProvider>();
+
+        services.AddScoped<IAuthorizationService, AuthorizationService>();
 
         return services;
     }

@@ -1,4 +1,5 @@
-﻿using PodkarpackiLekarz.Shared.Identity;
+﻿using PodkarpackiLekarz.Core.Users.Exceptions;
+using PodkarpackiLekarz.Shared.Identity;
 
 namespace PodkarpackiLekarz.Core.Users;
 public class IdentityUser
@@ -9,6 +10,7 @@ public class IdentityUser
     public string Email { get; private set; }
     public string Password { get; private set; }
     public Role Role { get; private set; }
+    public UserSession? Session { get; private set; }
 
     public IdentityUser(
         Guid id,
@@ -32,5 +34,24 @@ public class IdentityUser
     public void SetPassword(string password)
     {
         Password = password;
+    }
+
+    public void ValidatePassword(string password)
+    {
+        if (password != Password)
+            throw new IncorrectPasswordException();
+    }
+
+    public void SetSession(
+            string refreshToken,
+            DateTime refreshTokenExpirationDate)
+    {
+        Session = UserSession
+            .SetSession(refreshToken, refreshTokenExpirationDate);
+    }
+
+    public void RevokeSession()
+    {
+        Session?.Revoke();
     }
 }

@@ -27,5 +27,6 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new DoctorTypeEntityConfiguration());
         modelBuilder.ApplyConfiguration(new AdministratorEntityConfiguration());
         modelBuilder.ApplyConfiguration(new PatientEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new UserSessionEntityConfiguration());
     }
 }

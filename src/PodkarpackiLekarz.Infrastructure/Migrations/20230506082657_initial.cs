@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PodkarpackiLekarz.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initialmigration : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -105,6 +105,29 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserSessions",
+                schema: "PLA",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RefreshTokenExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Revoked = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserSessions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserSessions_IdentityUsers_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "PLA",
+                        principalTable: "IdentityUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DoctorProfiles",
                 schema: "PLA",
                 columns: table => new
@@ -149,6 +172,13 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                 schema: "PLA",
                 table: "Patients",
                 column: "Pesel");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserSessions_UserId",
+                schema: "PLA",
+                table: "UserSessions",
+                column: "UserId",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -164,6 +194,10 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Patients",
+                schema: "PLA");
+
+            migrationBuilder.DropTable(
+                name: "UserSessions",
                 schema: "PLA");
 
             migrationBuilder.DropTable(

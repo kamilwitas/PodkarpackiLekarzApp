@@ -22,4 +22,12 @@ public class IdentityUsersRepository : IIdentityUsersRepository
 
     public Task<bool> IsExist(string email)
         => _dbContext.IdentityUsers.AnyAsync(x => x.Email.ToLower() == email.ToLower());
+
+    public void UpdateAsync(IdentityUser user)
+    {
+        _dbContext.IdentityUsers.Update(user);
+    }
+
+    public async Task SaveAsync()
+        => await _dbContext.SaveChangesAsync();
 }

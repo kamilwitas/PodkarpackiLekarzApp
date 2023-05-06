@@ -70,6 +70,32 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                     b.UseTptMappingStrategy();
                 });
 
+            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.UserSession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RefreshTokenExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Revoked")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserSessions", "PLA");
+                });
+
             modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Admins.Administrator", b =>
                 {
                     b.HasBaseType("PodkarpackiLekarz.Core.Users.IdentityUser");
@@ -101,6 +127,17 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                     b.HasIndex("Pesel");
 
                     b.ToTable("Patients", "PLA");
+                });
+
+            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.UserSession", b =>
+                {
+                    b.HasOne("PodkarpackiLekarz.Core.Users.IdentityUser", "IdentityUser")
+                        .WithOne("Session")
+                        .HasForeignKey("PodkarpackiLekarz.Core.Users.UserSession", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IdentityUser");
                 });
 
             modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Admins.Administrator", b =>
@@ -161,6 +198,11 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                         .HasForeignKey("PodkarpackiLekarz.Core.Users.Patients.Patient", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.IdentityUser", b =>
+                {
+                    b.Navigation("Session");
                 });
 #pragma warning restore 612, 618
         }

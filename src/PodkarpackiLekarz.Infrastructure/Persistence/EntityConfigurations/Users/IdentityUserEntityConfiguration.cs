@@ -14,6 +14,11 @@ internal class IdentityUserEntityConfiguration : IEntityTypeConfiguration<Identi
             .ValueGeneratedNever();
 
         builder.HasIndex(x => x.Email);
+
+        builder.HasOne(x => x.Session)
+            .WithOne(x => x.IdentityUser)
+            .HasForeignKey<UserSession>("UserId")
+            .OnDelete(DeleteBehavior.Cascade);            
     }
     
 }
