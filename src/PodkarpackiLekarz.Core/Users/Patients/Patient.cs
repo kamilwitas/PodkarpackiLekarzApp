@@ -1,4 +1,5 @@
-﻿using PodkarpackiLekarz.Core.Users.Exceptions;
+﻿using PodkarpackiLekarz.Core.Users.Base;
+using PodkarpackiLekarz.Core.Users.Exceptions;
 using PodkarpackiLekarz.Shared.Identity;
 
 namespace PodkarpackiLekarz.Core.Users.Patients;

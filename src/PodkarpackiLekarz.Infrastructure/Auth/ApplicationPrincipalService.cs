@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PodkarpackiLekarz.Application.Auth;
+using PodkarpackiLekarz.Shared.Identity;
 using System.Security.Claims;
 
 namespace PodkarpackiLekarz.Infrastructure.Auth
@@ -21,6 +23,18 @@ namespace PodkarpackiLekarz.Infrastructure.Auth
                 .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
             return Guid.Parse(userId!);
+        }
+
+        public Role GetUserRole()
+        {
+            var role = _httpContextAccessor.HttpContext?
+                .User?
+                .Claims?
+                .FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+
+            Enum.TryParse<Role>(role, out var roleEnum);
+
+            return roleEnum;
         }
     }
 }

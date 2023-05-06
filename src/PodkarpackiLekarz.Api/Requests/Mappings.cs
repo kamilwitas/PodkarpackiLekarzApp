@@ -1,5 +1,5 @@
 ﻿using PodkarpackiLekarz.Api.Requests.Users;
-using PodkarpackiLekarz.Application.Users.Administrators;
+using PodkarpackiLekarz.Application.Users.Administrators.AddAdministrator;
 using PodkarpackiLekarz.Application.Users.Common.SignIn;
 using PodkarpackiLekarz.Application.Users.Doctors.Register;
 using PodkarpackiLekarz.Application.Users.Patients.Register;

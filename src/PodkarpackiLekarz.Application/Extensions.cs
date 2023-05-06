@@ -9,7 +9,7 @@ using PodkarpackiLekarz.Core.Users.Admins;
 using PodkarpackiLekarz.Core.Users.Doctors;
 using PodkarpackiLekarz.Core.Users.Patients;
 using System.Reflection;
-using IdentityUser = PodkarpackiLekarz.Core.Users.IdentityUser;
+using IdentityUser = PodkarpackiLekarz.Core.Users.Base.IdentityUser;
 
 namespace PodkarpackiLekarz.Application;
 public static class Extensions

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PodkarpackiLekarz.Api.Requests;
 using PodkarpackiLekarz.Api.Requests.Users;
+using PodkarpackiLekarz.Application.Attributes;
 
 namespace PodkarpackiLekarz.Api.Controllers;
 

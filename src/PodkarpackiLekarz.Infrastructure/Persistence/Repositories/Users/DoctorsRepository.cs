@@ -27,8 +27,18 @@ public class DoctorsRepository : IDoctorsRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public void UpdateAsync(Doctor doctor)
+    public void Update(Doctor doctor)
     {
         _dbContext.Doctors.Update(doctor);
     }
+
+    public async Task<bool?> IsCredibilityConfirmed(Guid id)
+    {
+        var credibilityConfirmationStatus = await _dbContext.Doctors.Where(x => x.Id == id)
+            .Select(x => x.CredibilityConfirmed)?
+            .FirstOrDefaultAsync();
+
+        return credibilityConfirmationStatus;   
+    }
+        
 }

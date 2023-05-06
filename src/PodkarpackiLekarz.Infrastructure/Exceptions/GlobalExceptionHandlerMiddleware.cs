@@ -36,6 +36,11 @@ public class GlobalExceptionHandlerMiddleware : IMiddleware
             var jsonResponse = HandleValidationErrorException(context, ex, 400);
             await context.Response.WriteAsync(jsonResponse);
         }
+        catch (ForbiddenException ex)
+        {
+            var jsonResponse = HandleException(context, ex, 403);
+            await context.Response.WriteAsync(jsonResponse);
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, ex.Message);

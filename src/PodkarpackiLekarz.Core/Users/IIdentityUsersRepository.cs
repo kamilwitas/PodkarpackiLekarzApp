@@ -1,4 +1,6 @@
-﻿namespace PodkarpackiLekarz.Core.Users;
+﻿using PodkarpackiLekarz.Core.Users.Base;
+
+namespace PodkarpackiLekarz.Core.Users;
 public interface IIdentityUsersRepository
 {
     Task<IdentityUser?> GetAsync(Guid id);

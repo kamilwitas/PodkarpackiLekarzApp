@@ -4,7 +4,7 @@ using PodkarpackiLekarz.Application.Exceptions.Users;
 using PodkarpackiLekarz.Core.Users;
 using PodkarpackiLekarz.Core.Users.Admins;
 
-namespace PodkarpackiLekarz.Application.Users.Administrators;
+namespace PodkarpackiLekarz.Application.Users.Administrators.AddAdministrator;
 public class AddAdministratorCommandHandler : IRequestHandler<AddAdministratorCommand, Guid>
 {
     private readonly IAdministratorsRepository _administratorsRepository;

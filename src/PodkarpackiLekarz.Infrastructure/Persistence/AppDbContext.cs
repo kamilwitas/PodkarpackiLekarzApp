@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PodkarpackiLekarz.Core.Users;
 using PodkarpackiLekarz.Core.Users.Admins;
+using PodkarpackiLekarz.Core.Users.Base;
 using PodkarpackiLekarz.Core.Users.Doctors;
 using PodkarpackiLekarz.Core.Users.Patients;
 using PodkarpackiLekarz.Infrastructure.Persistence.EntityConfigurations.Users;

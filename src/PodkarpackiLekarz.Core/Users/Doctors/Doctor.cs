@@ -1,8 +1,9 @@
-﻿using PodkarpackiLekarz.Core.Users.Exceptions;
+﻿using PodkarpackiLekarz.Core.Users.Base;
+using PodkarpackiLekarz.Core.Users.Exceptions;
 using PodkarpackiLekarz.Shared.Identity;
 
 namespace PodkarpackiLekarz.Core.Users.Doctors;
-public class Doctor : IdentityUser
+public class Doctor : IdentityUser, IConfirmableUser
 {
     public DoctorProfile DoctorProfile { get; private set; }
     public bool CredibilityConfirmed { get; private set; }

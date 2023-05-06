@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace PodkarpackiLekarz.Application.Users.Administrators;
+namespace PodkarpackiLekarz.Application.Users.Administrators.AddAdministrator;
 public class AddAdministratorCommand : RegisterUserCommandBase, IRequest<Guid>
 {
     public AddAdministratorCommand(
@@ -8,7 +8,7 @@ public class AddAdministratorCommand : RegisterUserCommandBase, IRequest<Guid>
         string lastName,
         string email,
         string password,
-        string passwordConfirmation) 
+        string passwordConfirmation)
         : base(
             firstName,
             lastName,

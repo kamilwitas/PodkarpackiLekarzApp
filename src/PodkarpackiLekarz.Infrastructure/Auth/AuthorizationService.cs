@@ -11,12 +11,12 @@ namespace PodkarpackiLekarz.Infrastructure.Auth
     {
         private readonly IIdentityUsersRepository _usersRepository;
         private readonly IJwtProvider _jwtProvider;
-        private readonly IPasswordHasher<Core.Users.IdentityUser> _passwordHasher;        
+        private readonly IPasswordHasher<Core.Users.Base.IdentityUser> _passwordHasher;        
 
         public AuthorizationService(
             IIdentityUsersRepository usersRepository,
             IJwtProvider jwtProvider,
-            IPasswordHasher<Core.Users.IdentityUser> passwordHasher)
+            IPasswordHasher<Core.Users.Base.IdentityUser> passwordHasher)
         {
             _usersRepository = usersRepository;
             _jwtProvider = jwtProvider;
@@ -92,7 +92,7 @@ namespace PodkarpackiLekarz.Infrastructure.Auth
                 new Claim(ClaimTypes.Name, user.FirstName),
                 new Claim(ClaimTypes.Surname, user.LastName),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
             };
 
             var permissions = Permissions.GetPermissions(user.Role);

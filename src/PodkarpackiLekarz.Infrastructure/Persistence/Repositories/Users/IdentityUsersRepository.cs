@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PodkarpackiLekarz.Core.Users;
+using PodkarpackiLekarz.Core.Users.Base;
 
 namespace PodkarpackiLekarz.Infrastructure.Persistence.Repositories.Users;
 public class IdentityUsersRepository : IIdentityUsersRepository

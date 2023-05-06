@@ -1,7 +1,7 @@
 ﻿using PodkarpackiLekarz.Core.Users.Exceptions;
 using PodkarpackiLekarz.Shared.Identity;
 
-namespace PodkarpackiLekarz.Core.Users;
+namespace PodkarpackiLekarz.Core.Users.Base;
 public class IdentityUser
 {
     public Guid Id { get; private set; }
@@ -16,13 +16,13 @@ public class IdentityUser
         Guid id,
         string firstName,
         string lastName,
-        string email,        
+        string email,
         Role role)
     {
         Id = id;
         FirstName = firstName;
         LastName = lastName;
-        Email = email;        
+        Email = email;
         Role = role;
     }
 

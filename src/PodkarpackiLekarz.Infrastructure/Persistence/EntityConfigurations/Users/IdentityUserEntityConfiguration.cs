@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PodkarpackiLekarz.Core.Users;
+using PodkarpackiLekarz.Core.Users.Base;
 
 namespace PodkarpackiLekarz.Infrastructure.Persistence.EntityConfigurations.Users;
 internal class IdentityUserEntityConfiguration : IEntityTypeConfiguration<IdentityUser>

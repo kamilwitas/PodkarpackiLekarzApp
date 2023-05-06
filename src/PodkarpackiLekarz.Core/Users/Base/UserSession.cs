@@ -1,4 +1,4 @@
-﻿namespace PodkarpackiLekarz.Core.Users;
+﻿namespace PodkarpackiLekarz.Core.Users.Base;
 public class UserSession
 {
     public Guid Id { get; private set; }
