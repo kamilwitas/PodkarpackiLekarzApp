@@ -8,6 +8,7 @@ public static class Extensions
     public static IServiceCollection AddSwagger(
         this IServiceCollection services)
     {
+        services.AddSwaggerExamples();
         services.AddSwaggerGen(c => {
             c.SwaggerDoc("v1", new OpenApiInfo
             {
@@ -34,8 +35,8 @@ public static class Extensions
             new string[] {}
         }
     });
-            //c.ExampleFilters();
-            //c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+            c.ExampleFilters();
+            c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
             c.SupportNonNullableReferenceTypes();
         });
 
