@@ -12,7 +12,7 @@ using PodkarpackiLekarz.Infrastructure.Persistence;
 namespace PodkarpackiLekarz.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230506092811_initial")]
+    [Migration("20230506112925_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -74,32 +74,6 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                     b.UseTptMappingStrategy();
                 });
 
-            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.UserSession", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("RefreshToken")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("RefreshTokenExpiryDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Revoked")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("UserSessions", "PLA");
-                });
-
             modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Admins.Administrator", b =>
                 {
                     b.HasBaseType("PodkarpackiLekarz.Core.Users.IdentityUser");
@@ -135,15 +109,37 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                     b.ToTable("Patients", "PLA");
                 });
 
-            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.UserSession", b =>
+            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.IdentityUser", b =>
                 {
-                    b.HasOne("PodkarpackiLekarz.Core.Users.IdentityUser", "IdentityUser")
-                        .WithOne("Session")
-                        .HasForeignKey("PodkarpackiLekarz.Core.Users.UserSession", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.OwnsOne("PodkarpackiLekarz.Core.Users.UserSession", "Session", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uniqueidentifier");
 
-                    b.Navigation("IdentityUser");
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("RefreshToken")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<DateTime>("RefreshTokenExpiryDate")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<bool>("Revoked")
+                                .HasColumnType("bit");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("UserSessions", "PLA");
+
+                            b1.WithOwner("IdentityUser")
+                                .HasForeignKey("UserId");
+
+                            b1.Navigation("IdentityUser");
+                        });
+
+                    b.Navigation("Session");
                 });
 
             modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Admins.Administrator", b =>
@@ -204,11 +200,6 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                         .HasForeignKey("PodkarpackiLekarz.Core.Users.Patients.Patient", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.IdentityUser", b =>
-                {
-                    b.Navigation("Session");
                 });
 #pragma warning restore 612, 618
         }

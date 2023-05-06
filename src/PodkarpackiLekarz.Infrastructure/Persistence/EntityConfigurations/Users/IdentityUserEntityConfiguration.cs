@@ -8,7 +8,7 @@ internal class IdentityUserEntityConfiguration : IEntityTypeConfiguration<Identi
     public void Configure(EntityTypeBuilder<IdentityUser> builder)
     {
         builder.ToTable("IdentityUsers");
-        
+
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id)
             .ValueGeneratedNever();
@@ -16,10 +16,9 @@ internal class IdentityUserEntityConfiguration : IEntityTypeConfiguration<Identi
         builder.HasIndex(x => x.Email)
             .IsUnique(true);
 
-        builder.HasOne(x => x.Session)
-            .WithOne(x => x.IdentityUser)
-            .HasForeignKey<UserSession>("UserId")
-            .OnDelete(DeleteBehavior.Cascade);            
-    }
-    
+        builder.OwnsOne(x => x.Session)
+            .ToTable("UserSessions")
+            .WithOwner(x => x.IdentityUser)            
+            .HasForeignKey("UserId");           
+    }    
 }

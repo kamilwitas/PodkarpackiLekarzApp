@@ -20,7 +20,8 @@ public static class Extensions
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddMediatR(x =>
         {      
-            x.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+            x.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));            
+            x.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
             x.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());            
         });
 

@@ -109,15 +109,15 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                 schema: "PLA",
                 columns: table => new
                 {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RefreshTokenExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Revoked = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Revoked = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserSessions", x => x.Id);
+                    table.PrimaryKey("PK_UserSessions", x => x.UserId);
                     table.ForeignKey(
                         name: "FK_UserSessions_IdentityUsers_UserId",
                         column: x => x.UserId,
@@ -175,13 +175,6 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                 column: "Pesel",
                 unique: true,
                 filter: "[Pesel] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserSessions_UserId",
-                schema: "PLA",
-                table: "UserSessions",
-                column: "UserId",
-                unique: true);
         }
 
         /// <inheritdoc />
