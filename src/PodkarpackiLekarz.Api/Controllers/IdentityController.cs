@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using PodkarpackiLekarz.Api.Requests;
 using PodkarpackiLekarz.Api.Requests.Users;
 using PodkarpackiLekarz.Application.Auth;
+using PodkarpackiLekarz.Application.Dtos.Users;
+using PodkarpackiLekarz.Application.Users.Common.GetIdentityUsers;
 
 namespace PodkarpackiLekarz.Api.Controllers
 {
@@ -28,6 +30,17 @@ namespace PodkarpackiLekarz.Api.Controllers
             var authDto = await _mediator.Send(command);
 
             return Ok(authDto);
+        }
+
+        [HttpGet]
+        [Route("users")]
+        public async Task<ActionResult<IEnumerable<IdentityUserDto>>> GetUsers()
+        {
+            var query = new GetIdentityUsersQuery();
+
+            var users = await _mediator.Send(query);
+
+            return Ok(users);
         }
     }
 }

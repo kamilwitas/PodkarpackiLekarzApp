@@ -9,8 +9,10 @@ using PodkarpackiLekarz.Core.Users.Patients;
 using PodkarpackiLekarz.Infrastructure.Auth;
 using PodkarpackiLekarz.Infrastructure.Exceptions;
 using PodkarpackiLekarz.Infrastructure.Persistence;
+using PodkarpackiLekarz.Infrastructure.Persistence.Read;
 using PodkarpackiLekarz.Infrastructure.Persistence.Repositories.Users;
 using PodkarpackiLekarz.Shared.Identity;
+using PodkarpackiLekarz.Shared.Persistence;
 
 namespace PodkarpackiLekarz.Infrastructure;
 public static class Extensions
@@ -19,11 +21,14 @@ public static class Extensions
         this IServiceCollection services, 
         IConfiguration configuration)
     {
+        var connectionString = configuration["Database:ConnectionString"];
+
         services.AddDbContext<AppDbContext>(opt =>
-        {
-            var connectionString = configuration["Database:ConnectionString"];
+        {            
             opt.UseSqlServer(connectionString);
         });
+
+        services.AddScoped<ISqlConnectionFactory>(x => new SqlConnectionFactory(connectionString));
 
         services.AddScoped<IPatientsRepository, PatientsRepository>();
         services.AddScoped<IDoctorsRepository, DoctorsRepository>();

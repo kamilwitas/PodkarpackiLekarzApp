@@ -42,7 +42,7 @@ public class AdministrationController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [Authorize(Policy = Permissions.ConfirmDoctorCredibility)]
-    public async Task<ActionResult<bool>> ConfirmDoctorCredibility([FromQuery]Guid doctorId)
+    public async Task<ActionResult<bool>> ConfirmDoctorCredibility(Guid doctorId)
     {
         var command = new ConfirmDoctorCredibilityCommand(doctorId);
 

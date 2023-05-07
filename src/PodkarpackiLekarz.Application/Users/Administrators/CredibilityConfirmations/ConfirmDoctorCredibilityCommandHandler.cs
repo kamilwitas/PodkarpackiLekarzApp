@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using PodkarpackiLekarz.Application.Users.Common.Exceptions;
+using PodkarpackiLekarz.Application.Exceptions.Users;
 using PodkarpackiLekarz.Core.Users.Doctors;
 
 namespace PodkarpackiLekarz.Application.Users.Administrators.CredibilityConfirmations;
