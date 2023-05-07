@@ -41,6 +41,11 @@ public class GlobalExceptionHandlerMiddleware : IMiddleware
             var jsonResponse = HandleException(context, ex, 403);
             await context.Response.WriteAsync(jsonResponse);
         }
+        catch (NotFoundException ex)
+        {
+            var jsonResponse = HandleException(context, ex, 404);
+            await context.Response.WriteAsync(jsonResponse);
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, ex.Message);

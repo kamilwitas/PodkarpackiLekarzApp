@@ -1,6 +1,7 @@
 ﻿using PodkarpackiLekarz.Api.Requests.Users;
 using PodkarpackiLekarz.Application.Users.Administrators.AddAdministrator;
 using PodkarpackiLekarz.Application.Users.Common.SignIn;
+using PodkarpackiLekarz.Application.Users.Doctors.AddDoctorType;
 using PodkarpackiLekarz.Application.Users.Doctors.Register;
 using PodkarpackiLekarz.Application.Users.Patients.Register;
 
@@ -44,4 +45,8 @@ public static class Mappings
         => new SignInCommand(
             request.Email,
             request.Password);
+
+    public static AddDoctorTypeCommand ToCommand(
+        this AddDoctorTypeRequest request)
+        => new AddDoctorTypeCommand(request.Speciality);
 }

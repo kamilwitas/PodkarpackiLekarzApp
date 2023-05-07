@@ -1,9 +1,11 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PodkarpackiLekarz.Api.Requests;
 using PodkarpackiLekarz.Api.Requests.Users;
 using PodkarpackiLekarz.Application.Auth;
 using PodkarpackiLekarz.Application.Dtos.Users;
+using PodkarpackiLekarz.Application.Users.Common.GetAuthUser;
 using PodkarpackiLekarz.Application.Users.Common.GetIdentityUsers;
 
 namespace PodkarpackiLekarz.Api.Controllers
@@ -13,10 +15,14 @@ namespace PodkarpackiLekarz.Api.Controllers
     public class IdentityController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IApplicationPrincipalService _applicationPrincipalService;
 
-        public IdentityController(IMediator mediator)
+        public IdentityController(
+            IMediator mediator,
+            IApplicationPrincipalService applicationPrincipalService)
         {
             _mediator = mediator;
+            _applicationPrincipalService = applicationPrincipalService;
         }
 
         [HttpPost]
@@ -41,6 +47,23 @@ namespace PodkarpackiLekarz.Api.Controllers
             var users = await _mediator.Send(query);
 
             return Ok(users);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("users/logged")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<AuthUserDto>> GetAuthUser()
+        {
+            var loggedUserId = _applicationPrincipalService.GetUserId();
+
+            var query = new GetAuthUserQuery(loggedUserId);
+
+            var authUserDto = await _mediator.Send(query);
+
+            return Ok(authUserDto);
         }
     }
 }

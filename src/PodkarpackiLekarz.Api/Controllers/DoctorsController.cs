@@ -6,6 +6,7 @@ using PodkarpackiLekarz.Api.Requests.Users;
 using PodkarpackiLekarz.Application.Dtos.Users;
 using PodkarpackiLekarz.Application.Users.Doctors.CredibilityConfirmations;
 using PodkarpackiLekarz.Application.Users.Doctors.GetDoctorsToCredibilityConfirmation;
+using PodkarpackiLekarz.Application.Users.Doctors.GetDoctorTypes;
 using PodkarpackiLekarz.Shared.Identity;
 using PodkarpackiLekarz.Shared.Models;
 
@@ -67,5 +68,35 @@ public class DoctorsController : ControllerBase
         var result = await _mediator.Send(query);
 
         return result.Items.Any() ? Ok(result) : NotFound();        
+    }
+
+    [HttpGet]
+    [Route("types")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [AllowAnonymous]
+    public async Task<ActionResult<IEnumerable<DoctorTypeDto>>> GetDoctorTypes()
+    {
+        var query = new GetDoctorTypesQuery();
+
+        var doctorTypes = await _mediator.Send(query);
+
+        return doctorTypes.Any() ? Ok(doctorTypes) : NotFound();
+    }
+
+    [HttpPost]
+    [Route("types")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [Authorize(Policy = Permissions.ManageDoctors)]
+    public async Task<ActionResult<Guid>> AddDoctorType([FromBody] AddDoctorTypeRequest request)
+    {
+        var command = request.ToCommand();
+
+        var doctorTypeId = await _mediator.Send(command);
+
+        return Ok(doctorTypeId);
     }
 }

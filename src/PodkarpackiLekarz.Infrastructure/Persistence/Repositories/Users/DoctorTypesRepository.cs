@@ -11,6 +11,10 @@ public class DoctorTypesRepository : IDoctorTypesRepository
         _dbContext = dbContext;
     }
 
+    public async Task<DoctorType?> GetAsync(string speciality)
+        => await _dbContext.DoctorTypes
+            .FirstOrDefaultAsync(x => x.Speciality.ToLower() == speciality.ToLower());
+
     public async Task AddAsync(DoctorType doctorType)
     {
         await _dbContext.DoctorTypes.AddAsync(doctorType);
