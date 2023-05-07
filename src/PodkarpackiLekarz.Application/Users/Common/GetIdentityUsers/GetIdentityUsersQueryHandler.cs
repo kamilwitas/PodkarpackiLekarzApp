@@ -27,6 +27,8 @@ public class GetIdentityUsersQueryHandler : IRequestHandler<GetIdentityUsersQuer
 
         var users = await connection.QueryAsync<IdentityUserDto>(sql);
 
+        users.ToList().ForEach(x => x.TranslateEnums());
+
         return users;
     }
 }

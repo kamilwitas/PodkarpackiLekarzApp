@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PodkarpackiLekarz.Api.Requests;
 using PodkarpackiLekarz.Api.Requests.Users;
+using PodkarpackiLekarz.Application.Dtos.Users;
 using PodkarpackiLekarz.Application.Users.Doctors.CredibilityConfirmations;
+using PodkarpackiLekarz.Application.Users.Doctors.GetDoctorsToCredibilityConfirmation;
 using PodkarpackiLekarz.Shared.Identity;
+using PodkarpackiLekarz.Shared.Models;
 
 namespace PodkarpackiLekarz.Api.Controllers;
 
@@ -47,5 +50,22 @@ public class DoctorsController : ControllerBase
         var isConfirmed = await _mediator.Send(command);
 
         return Ok(isConfirmed);
+    }
+
+    [HttpGet]
+    [Route("unconfirmed")]
+    [Authorize(Policy = Permissions.ConfirmDoctorCredibility)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<ActionResult<PagedResult<DoctorBasicDto>>> GetDoctorsWaitingForConfirmation(
+        [FromQuery]int pageNumber = 1, [FromQuery]int pageSize = 5)
+    {
+        var query = new GetDoctorsToCredibilityConfirmationQuery(pageNumber, pageSize);
+
+        var result = await _mediator.Send(query);
+
+        return result.Items.Any() ? Ok(result) : NotFound();        
     }
 }
