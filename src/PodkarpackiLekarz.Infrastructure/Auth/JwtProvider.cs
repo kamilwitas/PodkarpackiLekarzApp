@@ -73,7 +73,7 @@ namespace PodkarpackiLekarz.Infrastructure.Auth
 
                 return principal;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new InvalidAccessTokenException();
             }

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace PodkarpackiLekarz.Application.Users.Administrators.CredibilityConfirmations;
+namespace PodkarpackiLekarz.Application.Users.Doctors.CredibilityConfirmations;
 public class ConfirmDoctorCredibilityCommand : IRequest<bool>
 {
     public Guid DoctorId { get; private set; }

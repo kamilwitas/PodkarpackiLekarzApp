@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PodkarpackiLekarz.Api", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PodkarpackiLekarz.Shared", "src\PodkarpackiLekarz.Shared\PodkarpackiLekarz.Shared.csproj", "{677FD8FE-4E2C-45BC-9574-154CEAF95256}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodkarpackiLekarz.Core", "src\PodkarpackiLekarz.Core\PodkarpackiLekarz.Core.csproj", "{E8A45D05-52F7-4038-BCB2-9C1F6A2411F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PodkarpackiLekarz.Core", "src\PodkarpackiLekarz.Core\PodkarpackiLekarz.Core.csproj", "{E8A45D05-52F7-4038-BCB2-9C1F6A2411F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodkarpackiLekarz.Infrastructure", "src\PodkarpackiLekarz.Infrastructure\PodkarpackiLekarz.Infrastructure.csproj", "{FC30FCC2-0E91-4255-AE81-ED110C5E4D4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PodkarpackiLekarz.Infrastructure", "src\PodkarpackiLekarz.Infrastructure\PodkarpackiLekarz.Infrastructure.csproj", "{FC30FCC2-0E91-4255-AE81-ED110C5E4D4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodkarpackiLekarz.Application", "src\PodkarpackiLekarz.Application\PodkarpackiLekarz.Application.csproj", "{DBD2767B-205C-472B-B01B-BDA47188D2DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PodkarpackiLekarz.Application", "src\PodkarpackiLekarz.Application\PodkarpackiLekarz.Application.csproj", "{DBD2767B-205C-472B-B01B-BDA47188D2DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

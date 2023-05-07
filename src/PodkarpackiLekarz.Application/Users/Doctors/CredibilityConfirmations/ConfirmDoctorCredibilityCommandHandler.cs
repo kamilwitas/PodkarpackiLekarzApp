@@ -2,7 +2,7 @@
 using PodkarpackiLekarz.Application.Exceptions.Users;
 using PodkarpackiLekarz.Core.Users.Doctors;
 
-namespace PodkarpackiLekarz.Application.Users.Administrators.CredibilityConfirmations;
+namespace PodkarpackiLekarz.Application.Users.Doctors.CredibilityConfirmations;
 public class ConfirmDoctorCredibilityCommandHandler : IRequestHandler<ConfirmDoctorCredibilityCommand, bool>
 {
     private readonly IDoctorsRepository _doctorsRepository;
