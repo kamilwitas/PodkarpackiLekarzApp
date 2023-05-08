@@ -65,5 +65,19 @@ namespace PodkarpackiLekarz.Api.Controllers
 
             return Ok(authUserDto);
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("token/refresh")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<AuthDto>> RefreshAccessToken([FromBody] RefreshAccessTokenRequest request)
+        {
+            var command = request.ToCommand();
+
+            var authDto = await _mediator.Send(command);
+
+            return Ok(authDto);
+        }
     }
 }
