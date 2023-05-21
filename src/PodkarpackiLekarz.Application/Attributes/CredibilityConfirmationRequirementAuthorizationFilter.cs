@@ -25,10 +25,11 @@ public class CredibilityConfirmationRequirementAuthorizationFilter : IAsyncAutho
 
         if (loggedUserRole == Role.Doctor)
         {
-            var doctorCredibilityConfirmationStatus = await _doctorsRepository.IsCredibilityConfirmed(loggedUserId);
+            var doctorCredibilityConfirmationStatus =
+                await _doctorsRepository.GetCredibilityConfirmationStatus(loggedUserId);
 
             if (doctorCredibilityConfirmationStatus is null ||
-                !doctorCredibilityConfirmationStatus.Value)
+                doctorCredibilityConfirmationStatus != CredibilityConfirmationStatus.Confirmed)
             {
                 throw new CredibilityIsNotConfirmedException();
             }

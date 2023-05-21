@@ -17,5 +17,7 @@ public class RegisterDoctorCommandValidator : AbstractValidator<RegisterDoctorCo
             .Matches(x => x.PasswordConfirmation);
         RuleFor(x => x.DoctorTypeId)
             .NotEmpty();
+        RuleFor(x => x.MedicalLicenseNumber)
+            .NotEmpty();
     }
 }

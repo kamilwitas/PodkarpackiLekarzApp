@@ -6,6 +6,7 @@ public static class Permissions
 
     public const string ManageUsers = "manage-users";
     public const string ConfirmDoctorCredibility = "confirm-doctor-credibility";
+    public const string RejectDoctorCredibility = "reject-doctor-credibility";
     public const string AddAdministrator = "add-administrator";
     public const string ManageDoctors = "manage-doctors";
 
@@ -24,6 +25,7 @@ public static class Permissions
     { 
         ManageUsers, 
         ConfirmDoctorCredibility,
+        RejectDoctorCredibility,
         AddAdministrator,
         ManageDoctors
     };

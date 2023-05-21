@@ -6,7 +6,7 @@ namespace PodkarpackiLekarz.Core.Users.Doctors;
 public class Doctor : IdentityUser, IConfirmableUser
 {
     public DoctorProfile DoctorProfile { get; private set; }
-    public bool CredibilityConfirmed { get; private set; }
+    public CredibilityConfirmationStatus CredibilityConfirmationStatus { get; private set; }
 
     private Doctor(
         Guid id,
@@ -14,7 +14,7 @@ public class Doctor : IdentityUser, IConfirmableUser
         string lastName,
         string email,
         DoctorProfile doctorProfile,
-        bool confirmed)
+        CredibilityConfirmationStatus credibilityConfirmationStatus)
         : base(
             id,
             firstName,
@@ -23,7 +23,7 @@ public class Doctor : IdentityUser, IConfirmableUser
             Role.Doctor)
     {
         DoctorProfile = doctorProfile;
-        CredibilityConfirmed = confirmed;
+        CredibilityConfirmationStatus = credibilityConfirmationStatus;
     }
 
     public Doctor()
@@ -36,7 +36,8 @@ public class Doctor : IdentityUser, IConfirmableUser
         string lastName,
         string email,
         DoctorType doctorType,
-        string description)
+        string description,
+        string medicalLicenseNumber)
     {
         if (string.IsNullOrEmpty(firstName))
             throw new FieldCannotBeNullOrEmptyException(nameof(firstName));
@@ -49,7 +50,8 @@ public class Doctor : IdentityUser, IConfirmableUser
 
         var doctorProfile = DoctorProfile.Create(
             doctorType,
-            description);
+            description,
+            medicalLicenseNumber);
 
         return new Doctor(
             Guid.NewGuid(),
@@ -57,11 +59,11 @@ public class Doctor : IdentityUser, IConfirmableUser
             lastName: lastName,
             email: email,
             doctorProfile: doctorProfile,
-            confirmed: false);
+            CredibilityConfirmationStatus.Waiting);
     }
-    
+
     public void ConfirmDoctorCredibility()
-    {
-        CredibilityConfirmed = true;
-    }
+    => CredibilityConfirmationStatus = CredibilityConfirmationStatus.Confirmed;
+    public void RejectDoctorCredibility()
+        => CredibilityConfirmationStatus = CredibilityConfirmationStatus.Rejected;
 }

@@ -10,13 +10,15 @@ public static class UsersFactory
         string lastName,
         string email,
         DoctorType doctorType,
-        string description)
+        string description,
+        string medicalLicenseNumber)
         => Doctor.Create(
             firstName,
             lastName,
             email,
             doctorType,
-            description);
+            description,
+            medicalLicenseNumber);
 
     public static Administrator CreateAdministrator(
         string firstName,

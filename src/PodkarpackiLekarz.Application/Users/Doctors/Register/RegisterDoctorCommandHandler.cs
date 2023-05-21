@@ -39,7 +39,8 @@ public class RegisterDoctorCommandHandler : IRequestHandler<RegisterDoctorComman
             request.LastName,
             request.Email,
             doctorType,
-            request.Description);
+            request.Description,
+            request.MedicalLicenseNumber);
 
         var hashedPassword = _passwordHasher.HashPassword(doctor, request.Password);
 

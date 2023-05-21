@@ -32,13 +32,11 @@ public class DoctorsRepository : IDoctorsRepository
         _dbContext.Doctors.Update(doctor);
     }
 
-    public async Task<bool?> IsCredibilityConfirmed(Guid id)
+    public async Task<CredibilityConfirmationStatus?> GetCredibilityConfirmationStatus(Guid doctorId)
     {
-        var credibilityConfirmationStatus = await _dbContext.Doctors.Where(x => x.Id == id)
-            .Select(x => x.CredibilityConfirmed)?
-            .FirstOrDefaultAsync();
+        var credibilityConfirmationStatus = await _dbContext.Doctors.Where(x => x.Id == doctorId)
+            .Select(x => x.CredibilityConfirmationStatus)?.FirstOrDefaultAsync();
 
-        return credibilityConfirmationStatus;   
+        return credibilityConfirmationStatus;
     }
-        
 }

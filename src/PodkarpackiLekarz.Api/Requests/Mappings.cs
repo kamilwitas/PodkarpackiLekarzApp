@@ -30,7 +30,8 @@ public static class Mappings
             request.Password,
             request.PasswordConfirmation,
             request.DoctorTypeId,
-            request.Description);
+            request.Description,
+            request.medicalLicenseNumber);
 
     public static AddAdministratorCommand ToCommand(
         this AddAdministratorRequest request)

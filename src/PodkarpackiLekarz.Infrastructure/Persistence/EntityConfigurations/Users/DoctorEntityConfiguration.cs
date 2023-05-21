@@ -18,6 +18,5 @@ internal class DoctorEntityConfiguration : IEntityTypeConfiguration<Doctor>
 
         builder.Property(x => x.Id)
             .ValueGeneratedNever();
-            
     }
 }

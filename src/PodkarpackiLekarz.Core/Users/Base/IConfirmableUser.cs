@@ -1,6 +1,8 @@
-﻿namespace PodkarpackiLekarz.Core.Users.Base;
+﻿using PodkarpackiLekarz.Core.Users.Doctors;
+
+namespace PodkarpackiLekarz.Core.Users.Base;
 public interface IConfirmableUser
 {
-    bool CredibilityConfirmed { get; }
+    public CredibilityConfirmationStatus CredibilityConfirmationStatus { get; }
     void ConfirmDoctorCredibility();
 }

@@ -52,6 +52,21 @@ public class DoctorsController : ControllerBase
 
         return Ok(isConfirmed);
     }
+    
+    [HttpPost]
+    [Route("{doctorId}/rejectCredibility")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [Authorize(Policy = Permissions.RejectDoctorCredibility)]
+    public async Task<ActionResult<bool>> RejectDoctorCredibility(Guid doctorId)
+    {
+        var command = new RejectDoctorCredibilityCommand(doctorId);
+
+        await _mediator.Send(command);
+
+        return Ok();
+    }
 
     [HttpGet]
     [Route("unconfirmed")]

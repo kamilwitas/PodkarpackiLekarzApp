@@ -6,5 +6,5 @@ public interface IDoctorsRepository
     Task<Doctor?> GetAsync(Guid id);
     Task<Doctor?> GetAsync(string email);
     Task SaveAsync();
-    Task<bool?> IsCredibilityConfirmed(Guid id);
+    Task<CredibilityConfirmationStatus?> GetCredibilityConfirmationStatus(Guid doctorId);
 }

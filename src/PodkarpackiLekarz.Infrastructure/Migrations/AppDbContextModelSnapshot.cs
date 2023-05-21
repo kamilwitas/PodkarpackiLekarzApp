@@ -23,39 +23,21 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Doctors.DoctorType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Speciality")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DoctorTypes", "PLA");
-                });
-
-            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.IdentityUser", b =>
+            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Base.IdentityUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Role")
@@ -64,33 +46,47 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
 
                     b.ToTable("IdentityUsers", "PLA");
 
                     b.UseTptMappingStrategy();
                 });
 
+            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Doctors.DoctorType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Speciality")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DoctorTypes", "PLA");
+                });
+
             modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Admins.Administrator", b =>
                 {
-                    b.HasBaseType("PodkarpackiLekarz.Core.Users.IdentityUser");
+                    b.HasBaseType("PodkarpackiLekarz.Core.Users.Base.IdentityUser");
 
                     b.ToTable("Administrators", "PLA");
                 });
 
             modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Doctors.Doctor", b =>
                 {
-                    b.HasBaseType("PodkarpackiLekarz.Core.Users.IdentityUser");
+                    b.HasBaseType("PodkarpackiLekarz.Core.Users.Base.IdentityUser");
 
-                    b.Property<bool>("CredibilityConfirmed")
-                        .HasColumnType("bit");
+                    b.Property<int>("CredibilityConfirmationStatus")
+                        .HasColumnType("int");
 
                     b.ToTable("Doctors", "PLA");
                 });
 
             modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Patients.Patient", b =>
                 {
-                    b.HasBaseType("PodkarpackiLekarz.Core.Users.IdentityUser");
+                    b.HasBaseType("PodkarpackiLekarz.Core.Users.Base.IdentityUser");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -106,9 +102,9 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                     b.ToTable("Patients", "PLA");
                 });
 
-            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.IdentityUser", b =>
+            modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Base.IdentityUser", b =>
                 {
-                    b.OwnsOne("PodkarpackiLekarz.Core.Users.UserSession", "Session", b1 =>
+                    b.OwnsOne("PodkarpackiLekarz.Core.Users.Base.UserSession", "Session", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
@@ -117,7 +113,6 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("RefreshToken")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<DateTime>("RefreshTokenExpiryDate")
@@ -141,7 +136,7 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
 
             modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Admins.Administrator", b =>
                 {
-                    b.HasOne("PodkarpackiLekarz.Core.Users.IdentityUser", null)
+                    b.HasOne("PodkarpackiLekarz.Core.Users.Base.IdentityUser", null)
                         .WithOne()
                         .HasForeignKey("PodkarpackiLekarz.Core.Users.Admins.Administrator", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -150,7 +145,7 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
 
             modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Doctors.Doctor", b =>
                 {
-                    b.HasOne("PodkarpackiLekarz.Core.Users.IdentityUser", null)
+                    b.HasOne("PodkarpackiLekarz.Core.Users.Base.IdentityUser", null)
                         .WithOne()
                         .HasForeignKey("PodkarpackiLekarz.Core.Users.Doctors.Doctor", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -162,11 +157,13 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Description")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<Guid>("DoctorTypeId")
+                            b1.Property<Guid?>("DoctorTypeId")
                                 .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("MedicalLicenseNumber")
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("identityUserId");
 
@@ -176,9 +173,7 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
 
                             b1.HasOne("PodkarpackiLekarz.Core.Users.Doctors.DoctorType", "DoctorType")
                                 .WithMany()
-                                .HasForeignKey("DoctorTypeId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
+                                .HasForeignKey("DoctorTypeId");
 
                             b1.WithOwner()
                                 .HasForeignKey("identityUserId");
@@ -186,13 +181,12 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                             b1.Navigation("DoctorType");
                         });
 
-                    b.Navigation("DoctorProfile")
-                        .IsRequired();
+                    b.Navigation("DoctorProfile");
                 });
 
             modelBuilder.Entity("PodkarpackiLekarz.Core.Users.Patients.Patient", b =>
                 {
-                    b.HasOne("PodkarpackiLekarz.Core.Users.IdentityUser", null)
+                    b.HasOne("PodkarpackiLekarz.Core.Users.Base.IdentityUser", null)
                         .WithOne()
                         .HasForeignKey("PodkarpackiLekarz.Core.Users.Patients.Patient", "Id")
                         .OnDelete(DeleteBehavior.Cascade)

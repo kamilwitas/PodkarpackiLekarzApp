@@ -7,6 +7,7 @@ public record RegisterDoctorRequest(
     string Password,
     string PasswordConfirmation,
     Guid DoctorTypeId,
-    string Description);
+    string Description,
+    string medicalLicenseNumber);
 
 
