@@ -10,4 +10,8 @@
     <ProjectReference Include="..\PodkarpackiLekarz.Shared\PodkarpackiLekarz.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Calendars\Entities" />
+  </ItemGroup>
+
 </Project>
