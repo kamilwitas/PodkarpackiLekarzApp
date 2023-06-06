@@ -1,8 +1,9 @@
 ﻿using PodkarpackiLekarz.Core.Calendars.Exceptions;
+using System.Numerics;
 
 namespace PodkarpackiLekarz.Core.Calendars;
 
-public class Timeframe
+public class Timeframe : IEquatable<Timeframe>
 {
     public TimeOnly StartTime { get; private set; }
     public TimeOnly EndTime { get; private set; }
@@ -35,4 +36,14 @@ public class Timeframe
 
         return new Timeframe(startTimeNew, endTimeNew);
     }
+
+    public bool Equals(Timeframe other)
+    {
+        return StartTime == other.StartTime && EndTime == other.EndTime;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return base.Equals(obj);
+    }    
 }

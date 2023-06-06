@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using PodkarpackiLekarz.Application.Behaviours;
+using PodkarpackiLekarz.Application.Calendar.Services;
 using PodkarpackiLekarz.Application.Users.Common.Initializer;
 using PodkarpackiLekarz.Core.Users.Admins;
 using PodkarpackiLekarz.Core.Users.Doctors;
@@ -29,6 +30,7 @@ public static class Extensions
         services.AddTransient<IPasswordHasher<Doctor>, PasswordHasher<Doctor>>();
         services.AddTransient<IPasswordHasher<Administrator>, PasswordHasher<Administrator>>();
         services.AddTransient<IPasswordHasher<IdentityUser>, PasswordHasher<IdentityUser>>();
+        services.AddTransient<IScheduleCreator, ScheduleCreator>();
         services.AddScoped<IInitialAdminCreator, InitialAdminCreator>();
 
         return services;

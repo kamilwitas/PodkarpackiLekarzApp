@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PodkarpackiLekarz.Shared\PodkarpackiLekarz.Shared.csproj" />
+    <Compile Remove="Calendars\Entities\**" />
+    <EmbeddedResource Remove="Calendars\Entities\**" />
+    <None Remove="Calendars\Entities\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Calendars\Entities" />
+    <ProjectReference Include="..\PodkarpackiLekarz.Shared\PodkarpackiLekarz.Shared.csproj" />
   </ItemGroup>
 
 </Project>

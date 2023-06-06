@@ -5,6 +5,7 @@ public interface IDoctorsRepository
     void Update(Doctor doctor);
     Task<Doctor?> GetAsync(Guid id);
     Task<Doctor?> GetAsync(string email);
+    Task<bool> IsExist(Guid doctorId);
     Task SaveAsync();
     Task<CredibilityConfirmationStatus?> GetCredibilityConfirmationStatus(Guid doctorId);
 }

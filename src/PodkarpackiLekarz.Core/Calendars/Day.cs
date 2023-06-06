@@ -24,28 +24,40 @@ public class Day
         Slots = slots ?? new List<Slot>();
     }
 
+    public static Day Create(
+        DateOnly date,
+        Guid doctorId)
+        => new Day(
+            Guid.NewGuid(),
+            date,
+            doctorId);
+
     public void AddSlots(IEnumerable<Slot> slots)
     {
         foreach (var newSlot in slots)
         {
-            CheckIfSlotCanBeAdded(newSlot);
-            
-            Slots.Add(newSlot);
+            AddSingleSlot(newSlot);
         }
     }
 
-    private void CheckIfSlotCanBeAdded(Slot slot)
+    public void AddSingleSlot(Slot slot)
     {
-        Func<Slot, bool> condition = new(x => ((x.Timeframe.StartTime > slot.Timeframe.StartTime &&
-                                                        x.Timeframe.EndTime > slot.Timeframe.StartTime &&
-                                                        x.Timeframe.StartTime >= slot.Timeframe.EndTime &&
-                                                        x.Timeframe.EndTime > slot.Timeframe.EndTime) ||
-                                                    (x.Timeframe.StartTime < slot.Timeframe.StartTime &&
-                                                     x.Timeframe.EndTime <= slot.Timeframe.StartTime &&
-                                                     x.Timeframe.StartTime < slot.Timeframe.EndTime &&
-                                                     x.Timeframe.EndTime < slot.Timeframe.EndTime)));
-
-        if (Slots.Any(condition))
+        if (!CanAddSlot(slot))
             throw new TimeframeUnavailableException(slot.Timeframe);
+        Slots.Add(slot);
     }
+
+    private bool CanAddSlot(Slot slot)
+    {
+        var existingSlots = Slots
+            .Where(x =>
+            (slot.Timeframe.StartTime.IsBetween(x.Timeframe.StartTime, x.Timeframe.EndTime)) ||
+            (slot.Timeframe.StartTime <= x.Timeframe.StartTime && slot.Timeframe.EndTime > x.Timeframe.StartTime));
+
+
+        if (existingSlots.Any()) return false;
+
+        return true;
+    }
+
 }

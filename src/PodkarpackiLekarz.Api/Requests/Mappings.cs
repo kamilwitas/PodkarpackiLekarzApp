@@ -1,4 +1,6 @@
-﻿using PodkarpackiLekarz.Api.Requests.Users;
+﻿using PodkarpackiLekarz.Api.Requests.Calendars;
+using PodkarpackiLekarz.Api.Requests.Users;
+using PodkarpackiLekarz.Application.Calendar.CreateSlots;
 using PodkarpackiLekarz.Application.Users.Administrators.AddAdministrator;
 using PodkarpackiLekarz.Application.Users.Common.RefreshToken;
 using PodkarpackiLekarz.Application.Users.Common.SignIn;
@@ -57,4 +59,11 @@ public static class Mappings
         => new RefreshTokenCommand(
             request.ExpiredAccessToken,
             request.RefreshToken);
+
+    public static CreateSlotCommand ToCommand(
+        this CreateSlotRequest request)
+        => new CreateSlotCommand(
+            request.DoctorId,
+            request.startDateTime,
+            request.endDateTime);
 }

@@ -39,4 +39,7 @@ public class DoctorsRepository : IDoctorsRepository
 
         return credibilityConfirmationStatus;
     }
+
+    public async Task<bool> IsExist(Guid doctorId)
+        => await _dbContext.Doctors.AnyAsync(x => x.Id == doctorId);
 }
