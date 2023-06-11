@@ -11,6 +11,7 @@ public static class Permissions
     public const string ManageDoctors = "manage-doctors";
     public const string ManageCalendar = "manage-calendar";
     public const string ViewPublicCalendar = "view-public-calendar";
+    public const string BookAppoinment = "book-appoinment";
 
     public static string[] GetPermissions(Role role)
     {
@@ -34,7 +35,8 @@ public static class Permissions
     };
     private static string[] PatientPermissions = new string[] 
     {
-        ViewPublicCalendar
+        ViewPublicCalendar,
+        BookAppoinment
     };
     private static string[] DoctorPermissions = new string[] 
     {

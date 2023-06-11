@@ -1,5 +1,6 @@
 ﻿using PodkarpackiLekarz.Api.Requests.Calendars;
 using PodkarpackiLekarz.Api.Requests.Users;
+using PodkarpackiLekarz.Application.Calendar.Commands.BookAppoinment;
 using PodkarpackiLekarz.Application.Calendar.Commands.CreateSlots;
 using PodkarpackiLekarz.Application.Calendar.Queries.GetDoctorsPublicCalendar;
 using PodkarpackiLekarz.Application.Users.Administrators.AddAdministrator;
@@ -74,4 +75,8 @@ public static class Mappings
             request.DoctorId,
             request.From,
             request.To);
+
+    public static BookAppoinmentCommand ToCommand(
+        this BookAppoinmentRequest request)
+        => new BookAppoinmentCommand(request.SlotId);
 }

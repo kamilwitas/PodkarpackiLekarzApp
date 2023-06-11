@@ -47,6 +47,13 @@ public class Day
         Slots.Add(slot);
     }
 
+    public void BookAppoinment(Guid slotId, Guid patientId, DateTime currentDateTime)
+    {
+        var slot = Slots.FirstOrDefault(s => s.Id == slotId);
+
+        slot.BookAppoinment(patientId, currentDateTime);
+    }
+
     private bool CanAddSlot(Slot slot)
     {
         var existingSlots = Slots

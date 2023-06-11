@@ -18,8 +18,4 @@
     <ProjectReference Include="..\PodkarpackiLekarz.Core\PodkarpackiLekarz.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Calendar\Commands\" />
-  </ItemGroup>
-
 </Project>

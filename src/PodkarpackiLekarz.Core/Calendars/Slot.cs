@@ -29,7 +29,7 @@ public class Slot
             Guid.NewGuid(),
             timeFrame);
 
-    public void BookAppoinment(
+    internal void BookAppoinment(
         Guid patientId,
         DateTime currentDateTime)
     {

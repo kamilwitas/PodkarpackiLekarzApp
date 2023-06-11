@@ -6,6 +6,7 @@ using PodkarpackiLekarz.Api.Requests;
 using PodkarpackiLekarz.Api.Requests.Calendars;
 using PodkarpackiLekarz.Application.Attributes;
 using PodkarpackiLekarz.Application.Calendar.Queries.GetDoctorsPublicCalendar;
+using PodkarpackiLekarz.Infrastructure.Migrations;
 using PodkarpackiLekarz.Shared.Identity;
 
 namespace PodkarpackiLekarz.Api.Controllers
@@ -45,6 +46,17 @@ namespace PodkarpackiLekarz.Api.Controllers
             var result = await _mediator.Send(query);
 
             return result is null? NotFound() : Ok(result);
+        }
+
+        [HttpPost("appoinment")]
+        [Authorize(Policy = Permissions.BookAppoinment)]
+        public async Task<IActionResult> BookAppoinment([FromBody] BookAppoinmentRequest request)
+        {
+            var command = request.ToCommand();
+
+            await _mediator.Send(command);
+
+            return Ok();
         }
     }
 }
