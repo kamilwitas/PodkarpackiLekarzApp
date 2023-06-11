@@ -11,7 +11,7 @@ using PodkarpackiLekarz.Shared.Identity;
 namespace PodkarpackiLekarz.Api.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     public class CalendarsController : ControllerBase
     {
@@ -35,7 +35,8 @@ namespace PodkarpackiLekarz.Api.Controllers
             return Ok(slotId);
         }
 
-        [HttpGet("/public")]
+        [HttpGet("public")]
+        [Authorize(Policy = Permissions.ViewPublicCalendar)]
         public async Task<ActionResult<GetDoctorPublicCalendarResult>>GetDoctorPublicCalendar(
             [FromQuery] GetPublicDoctorCalendarRequest request)
         {
@@ -43,7 +44,7 @@ namespace PodkarpackiLekarz.Api.Controllers
 
             var result = await _mediator.Send(query);
 
-            return Ok(result);
+            return result is null? NotFound() : Ok(result);
         }
     }
 }
