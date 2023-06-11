@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace PodkarpackiLekarz.Application.Calendar.CreateSlots
+namespace PodkarpackiLekarz.Application.Calendar.Commands.CreateSlots
 {
     public class CreateSlotCommand : IRequest<Guid>
     {

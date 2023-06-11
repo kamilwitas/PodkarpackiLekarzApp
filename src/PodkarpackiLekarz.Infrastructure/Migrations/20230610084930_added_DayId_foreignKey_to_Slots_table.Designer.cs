@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PodkarpackiLekarz.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using PodkarpackiLekarz.Infrastructure.Persistence;
 namespace PodkarpackiLekarz.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230610084930_added_DayId_foreignKey_to_Slots_table")]
+    partial class added_DayId_foreignKey_to_Slots_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,6 +140,9 @@ namespace PodkarpackiLekarz.Infrastructure.Migrations
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<Guid>("DayId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("SlotId")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.HasKey("Id");

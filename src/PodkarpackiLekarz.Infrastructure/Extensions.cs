@@ -2,12 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PodkarpackiLekarz.Core.Calendars;
+using PodkarpackiLekarz.Application.Calendar.Read;
+using PodkarpackiLekarz.Core.Calendars.Repositories;
 using PodkarpackiLekarz.Core.Users;
 using PodkarpackiLekarz.Core.Users.Admins;
 using PodkarpackiLekarz.Core.Users.Doctors;
 using PodkarpackiLekarz.Core.Users.Patients;
 using PodkarpackiLekarz.Infrastructure.Auth;
+using PodkarpackiLekarz.Infrastructure.Calendars.Read;
 using PodkarpackiLekarz.Infrastructure.Exceptions;
 using PodkarpackiLekarz.Infrastructure.Persistence;
 using PodkarpackiLekarz.Infrastructure.Persistence.Read;
@@ -38,6 +40,7 @@ public static class Extensions
         services.AddScoped<IDoctorTypesRepository, DoctorTypesRepository>();
         services.AddScoped<IAdministratorsRepository, AdministratorsRepository>();
         services.AddScoped<ICalendarRepository, CalendarRepository>();
+        services.AddScoped<ICalendarReadonlyRepository, CalendarReadonlyRepository>();
 
         services.AddTransient<GlobalExceptionHandlerMiddleware>();
 

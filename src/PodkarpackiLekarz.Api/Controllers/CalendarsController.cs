@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using PodkarpackiLekarz.Api.Requests;
 using PodkarpackiLekarz.Api.Requests.Calendars;
 using PodkarpackiLekarz.Application.Attributes;
+using PodkarpackiLekarz.Application.Calendar.Queries.GetDoctorsPublicCalendar;
 using PodkarpackiLekarz.Shared.Identity;
 
 namespace PodkarpackiLekarz.Api.Controllers
 {
     [ApiController]
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     public class CalendarsController : ControllerBase
     {
@@ -32,6 +33,17 @@ namespace PodkarpackiLekarz.Api.Controllers
             var slotId = await _mediator.Send(command);
 
             return Ok(slotId);
+        }
+
+        [HttpGet("/public")]
+        public async Task<ActionResult<GetDoctorPublicCalendarResult>>GetDoctorPublicCalendar(
+            [FromQuery] GetPublicDoctorCalendarRequest request)
+        {
+            var query = request.ToQuery();
+
+            var result = await _mediator.Send(query);
+
+            return Ok(result);
         }
     }
 }

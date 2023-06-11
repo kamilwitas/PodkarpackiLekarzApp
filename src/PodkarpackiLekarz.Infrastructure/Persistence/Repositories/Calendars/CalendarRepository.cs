@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PodkarpackiLekarz.Core.Calendars;
+using PodkarpackiLekarz.Core.Calendars.Repositories;
 
 namespace PodkarpackiLekarz.Infrastructure.Persistence.Repositories.Calendars
 {

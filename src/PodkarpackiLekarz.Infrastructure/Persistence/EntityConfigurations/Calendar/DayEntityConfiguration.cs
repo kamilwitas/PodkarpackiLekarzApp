@@ -43,7 +43,8 @@ namespace PodkarpackiLekarz.Infrastructure.Persistence.EntityConfigurations.Cale
                     q.Ignore(w => w.IsCancelled);
                     q.Ignore(w => w.IsClosed);
                     q.Ignore(w => w.IsAccepted);
-                }).WithOwner().HasForeignKey("SlotId");
+                    q.WithOwner().HasForeignKey("SlotId");
+                });
 
                 b.OwnsOne<Timeframe>(x => x.Timeframe, n =>
                 {
@@ -52,7 +53,9 @@ namespace PodkarpackiLekarz.Infrastructure.Persistence.EntityConfigurations.Cale
 
                     n.Property(x => x.EndTime)
                     .HasConversion<TimeOnlyConverter, TimeOnlyComparer>();
-                });                                               
+                });
+
+                b.WithOwner().HasForeignKey("DayId");
             });
 
             builder.HasOne<Doctor>()

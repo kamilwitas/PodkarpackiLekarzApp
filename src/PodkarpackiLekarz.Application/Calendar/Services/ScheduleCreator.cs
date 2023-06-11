@@ -1,5 +1,6 @@
 ﻿using PodkarpackiLekarz.Application.Calendar.Exceptions;
 using PodkarpackiLekarz.Core.Calendars;
+using PodkarpackiLekarz.Core.Calendars.Repositories;
 
 namespace PodkarpackiLekarz.Application.Calendar.Services
 {

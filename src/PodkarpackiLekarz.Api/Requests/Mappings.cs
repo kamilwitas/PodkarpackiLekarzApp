@@ -1,6 +1,7 @@
 ﻿using PodkarpackiLekarz.Api.Requests.Calendars;
 using PodkarpackiLekarz.Api.Requests.Users;
-using PodkarpackiLekarz.Application.Calendar.CreateSlots;
+using PodkarpackiLekarz.Application.Calendar.Commands.CreateSlots;
+using PodkarpackiLekarz.Application.Calendar.Queries.GetDoctorsPublicCalendar;
 using PodkarpackiLekarz.Application.Users.Administrators.AddAdministrator;
 using PodkarpackiLekarz.Application.Users.Common.RefreshToken;
 using PodkarpackiLekarz.Application.Users.Common.SignIn;
@@ -66,4 +67,11 @@ public static class Mappings
             request.DoctorId,
             request.startDateTime,
             request.endDateTime);
+
+    public static GetDoctorPublicCalendarQuery ToQuery(
+        this GetPublicDoctorCalendarRequest request)
+        => new GetDoctorPublicCalendarQuery(
+            request.DoctorId,
+            request.From,
+            request.To);
 }
