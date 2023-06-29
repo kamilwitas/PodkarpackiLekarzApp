@@ -11,7 +11,7 @@ namespace PodkarpackiLekarz.Infrastructure.Auth
     {
         private readonly IIdentityUsersRepository _usersRepository;
         private readonly IJwtProvider _jwtProvider;
-        private readonly IPasswordHasher<Core.Users.Base.IdentityUser> _passwordHasher;        
+        private readonly IPasswordHasher<Core.Users.Base.IdentityUser> _passwordHasher;       
 
         public AuthorizationService(
             IIdentityUsersRepository usersRepository,

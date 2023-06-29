@@ -4,7 +4,6 @@ using PodkarpackiLekarz.Application.Calendar.Commands.BookAppoinment;
 using PodkarpackiLekarz.Application.Calendar.Commands.CreateSlots;
 using PodkarpackiLekarz.Application.Calendar.Queries.GetDoctorsPublicCalendar;
 using PodkarpackiLekarz.Application.Users.Administrators.AddAdministrator;
-using PodkarpackiLekarz.Application.Users.Common.RefreshToken;
 using PodkarpackiLekarz.Application.Users.Common.SignIn;
 using PodkarpackiLekarz.Application.Users.Doctors.AddDoctorType;
 using PodkarpackiLekarz.Application.Users.Doctors.Register;
@@ -55,12 +54,6 @@ public static class Mappings
     public static AddDoctorTypeCommand ToCommand(
         this AddDoctorTypeRequest request)
         => new AddDoctorTypeCommand(request.Speciality);
-
-    public static RefreshTokenCommand ToCommand(
-        this RefreshAccessTokenRequest request)
-        => new RefreshTokenCommand(
-            request.ExpiredAccessToken,
-            request.RefreshToken);
 
     public static CreateSlotCommand ToCommand(
         this CreateSlotRequest request)

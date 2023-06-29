@@ -2,21 +2,17 @@
 using PodkarpackiLekarz.Application.Auth;
 
 namespace PodkarpackiLekarz.Application.Users.Common.SignIn;
-public class SignInCommandHandler : IRequestHandler<SignInCommand, AuthDto>
+public class SignInCommandHandler : IRequestHandler<SignInCommand>
 {
-    private readonly IAuthorizationService _authorizationService;
+    private readonly ICookieAuthorizationService _cookieAuthorizationService;
 
-    public SignInCommandHandler(IAuthorizationService authorizationService)
+    public SignInCommandHandler(ICookieAuthorizationService cookieAuthorizationService)
     {
-        _authorizationService = authorizationService;
+        _cookieAuthorizationService = cookieAuthorizationService;
     }
 
-    public async Task<AuthDto> Handle(SignInCommand request, CancellationToken cancellationToken)
+    public async Task Handle(SignInCommand request, CancellationToken cancellationToken)
     {
-        var authDto = await _authorizationService.SignInAsync(
-            request.Email,
-            request.Password);
-
-        return authDto;
+        await _cookieAuthorizationService.SignInAsync(request.Email, request.Password);
     }
 }

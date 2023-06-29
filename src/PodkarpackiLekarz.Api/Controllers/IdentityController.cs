@@ -7,6 +7,7 @@ using PodkarpackiLekarz.Application.Auth;
 using PodkarpackiLekarz.Application.Dtos.Users;
 using PodkarpackiLekarz.Application.Users.Common.GetAuthUser;
 using PodkarpackiLekarz.Application.Users.Common.GetIdentityUsers;
+using PodkarpackiLekarz.Application.Users.Common.SignOut;
 
 namespace PodkarpackiLekarz.Api.Controllers
 {
@@ -29,16 +30,27 @@ namespace PodkarpackiLekarz.Api.Controllers
         [Route("signIn")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<AuthDto>> SignIn([FromBody]SignInRequest request)
+        public async Task<IActionResult> SignIn([FromBody]SignInRequest request)
         {
             var command = request.ToCommand();
 
-            var authDto = await _mediator.Send(command);
+            await _mediator.Send(command);
 
-            return Ok(authDto);
+            return Ok();
         }
 
+        [HttpPost("signOut")]
+        [Authorize]
+        public async Task<IActionResult> SignOutAsync()
+        {
+            var command = new SignOutCommand();
+            await _mediator.Send(command);
+            return Ok();
+        }
+
+
         [HttpGet]
+        [Authorize]
         [Route("users")]
         public async Task<ActionResult<IEnumerable<IdentityUserDto>>> GetUsers()
         {
@@ -64,20 +76,6 @@ namespace PodkarpackiLekarz.Api.Controllers
             var authUserDto = await _mediator.Send(query);
 
             return Ok(authUserDto);
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [Route("token/refresh")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<AuthDto>> RefreshAccessToken([FromBody] RefreshAccessTokenRequest request)
-        {
-            var command = request.ToCommand();
-
-            var authDto = await _mediator.Send(command);
-
-            return Ok(authDto);
         }
     }
 }

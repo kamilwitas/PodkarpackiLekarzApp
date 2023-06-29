@@ -1,6 +1,6 @@
-﻿namespace PodkarpackiLekarz.Infrastructure.Calendars.Read
+﻿namespace PodkarpackiLekarz.Infrastructure.Calendars.Read.ReadModels
 {
-    public class PublicCalendarDbEntry
+    public class PublicCalendarReadModel
     {
         public Guid? DoctorId { get; set; }
         public string? DoctorFirstName { get; set; }
@@ -12,7 +12,7 @@
         public TimeSpan? EndTime { get; set; }
         public bool? IsAvailable { get; set; }
 
-        public PublicCalendarDbEntry(
+        public PublicCalendarReadModel(
             Guid? doctorId,
             string? doctorFirstName,
             string? doctorLastName,
@@ -34,9 +34,9 @@
             IsAvailable = isAvailable;
         }
 
-        public PublicCalendarDbEntry()
+        public PublicCalendarReadModel()
         {
-            
+
         }
     }
 }

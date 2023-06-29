@@ -48,15 +48,6 @@ namespace PodkarpackiLekarz.Api.Controllers
             return result is null? NotFound() : Ok(result);
         }
 
-        [HttpPost("appoinment")]
-        [Authorize(Policy = Permissions.BookAppoinment)]
-        public async Task<IActionResult> BookAppoinment([FromBody] BookAppoinmentRequest request)
-        {
-            var command = request.ToCommand();
-
-            await _mediator.Send(command);
-
-            return Ok();
-        }
+        
     }
 }

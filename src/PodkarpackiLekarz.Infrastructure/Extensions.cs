@@ -47,7 +47,8 @@ public static class Extensions
         services.EnableAuthorizationWithPermissionPolicies();
 
         services.EnableAuthorizationWithPermissionPolicies();
-        services.EnableJwtAuthentication(configuration);
+        //services.EnableJwtAuthentication(configuration);
+        services.EnableCookieAuthentication();
 
 
         return services;

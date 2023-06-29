@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using PodkarpackiLekarz.Application.Calendar.Dtos.Public;
 using PodkarpackiLekarz.Application.Calendar.Read;
+using PodkarpackiLekarz.Infrastructure.Calendars.Read.ReadModels;
 using PodkarpackiLekarz.Shared.Persistence;
 
 namespace PodkarpackiLekarz.Infrastructure.Calendars.Read
@@ -27,14 +28,14 @@ namespace PodkarpackiLekarz.Infrastructure.Calendars.Read
                 toDateTime = new DateTime(DateTime.Now.AddDays(7).Year, DateTime.Now.AddDays(7).Month, DateTime.Now.AddDays(7).Day, 23, 59, 59);
 
             var sql = $@"select 
-                            doctors.Id {nameof(PublicCalendarDbEntry.DoctorId)},
-                            iu.FirstName {nameof(PublicCalendarDbEntry.DoctorFirstName)},
-                            iu.LastName {nameof(PublicCalendarDbEntry.DoctorLastName)},
-                            days.Id {nameof(PublicCalendarDbEntry.DayId)},
-                            days.Date {nameof(PublicCalendarDbEntry.Date)},
-                            slots.Id {nameof(PublicCalendarDbEntry.SlotId)},
-                            slots.Timeframe_StartTime {nameof(PublicCalendarDbEntry.StartTime)},
-                            slots.Timeframe_EndTime {nameof(PublicCalendarDbEntry.EndTime)},
+                            doctors.Id {nameof(PublicCalendarReadModel.DoctorId)},
+                            iu.FirstName {nameof(PublicCalendarReadModel.DoctorFirstName)},
+                            iu.LastName {nameof(PublicCalendarReadModel.DoctorLastName)},
+                            days.Id {nameof(PublicCalendarReadModel.DayId)},
+                            days.Date {nameof(PublicCalendarReadModel.Date)},
+                            slots.Id {nameof(PublicCalendarReadModel.SlotId)},
+                            slots.Timeframe_StartTime {nameof(PublicCalendarReadModel.StartTime)},
+                            slots.Timeframe_EndTime {nameof(PublicCalendarReadModel.EndTime)},
                             IsAvailable = 
                                 case
                                     when slots.Id is null then null
@@ -49,7 +50,7 @@ namespace PodkarpackiLekarz.Infrastructure.Calendars.Read
                                 and days.Date <= @ToDate
                             left join {AppSchema.Value}.IdentityUsers iu
                                 on iu.Id = doctors.Id
-                            left join {AppSchema.Value}.Slots slots
+                            left outer join {AppSchema.Value}.Slots slots
                                 on slots.DayId = days.id
                                 and slots.TimeFrame_StartTime >= @StartTime
                                 and slots.TimeFrame_EndTime <= @EndTime
@@ -66,17 +67,17 @@ namespace PodkarpackiLekarz.Infrastructure.Calendars.Read
             };
 
             var connection = _connectionFactory.GetOpenConnection();
-            var results = await connection.QueryAsync<PublicCalendarDbEntry>(sql, parameters);
+            var results = await connection.QueryAsync<PublicCalendarReadModel>(sql, parameters);
 
             return CreateCalendarPublicDto(results.ToList());
         }
 
-        private CalendarPublicDto? CreateCalendarPublicDto(List<PublicCalendarDbEntry> dbEntries)
+        private CalendarPublicDto? CreateCalendarPublicDto(List<PublicCalendarReadModel> dbEntries)
         {
             if (dbEntries is null || !dbEntries.Any())
                 return null;
 
-            var filteredDbEntries = new List<PublicCalendarDbEntry>();
+            var filteredDbEntries = new List<PublicCalendarReadModel>();
 
             dbEntries.ForEach(x =>
             {
